@@ -6,6 +6,7 @@ The Game Service is responsible for storing and retrieving game-related data. It
 
 ## 🔗 **Technologies**
 
+- **Language:** Go(GoKit)
 - **Communication Type:** gRPC
 - **Database:** MongoDB
 - **Responsibilities:**
