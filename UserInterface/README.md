@@ -6,6 +6,7 @@ The User Interface is the main interaction point for users, providing an intuiti
 
 ## 🔗 **Technologies**
 
+- **Language:** Typescript (React.js, TailwindCSS)
 - **Frontend Framework:** React.js / Next.js
 - **State Management:** Redux / Context API
 - **Backend Communication:** REST API & gRPC
