@@ -6,7 +6,7 @@ The Rating Service handles user-generated ratings and comments for video games. 
 
 ## 🔗 **Technologies**
 
-- **Language:** Node.js (NestJS, RabbitMQ)
+- **Language:** Java (Quarkus)
 - **Communication Type:** Message Broker (e.g., RabbitMQ, Kafka)
 - **Database:** MongoDB
 - **Responsibilities:**
