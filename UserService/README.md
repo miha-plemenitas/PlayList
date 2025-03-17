@@ -6,6 +6,7 @@ The User Service manages user authentication, registration, and profile data. It
 
 ## 🔗 **Technologies**
 
+- **Language:** Python (FastAPI) / C# (ASP.NET Core)
 - **Communication Type:** REST API
 - **Database:** MongoDB
 - **Responsibilities:**
