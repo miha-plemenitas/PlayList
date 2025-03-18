@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Set up Docker Buildx
+      # Set up Docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -34,7 +34,7 @@ jobs:
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -f user-service/user-service/Dockerfile -t user-service .
+          docker build -f UserService\user-service\user-service\Dockerfile -t user-service ./user-service
 
       # Run tests inside the Docker container
       - name: Run tests
