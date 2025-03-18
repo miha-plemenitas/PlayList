@@ -82,7 +82,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Testing Dependencies -->
+        <!-- Spring Boot Testing Dependencies (JUnit 5 included in Spring Boot Test) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -95,7 +95,7 @@
             <scope>test</scope>
         </dependency>
 
-            <!-- OpenAPI/Swagger Documentation -->
+        <!-- OpenAPI/Swagger Documentation -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -129,6 +129,19 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Add the Maven Surefire plugin to handle test executions -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <useModulePath>false</useModulePath> <!-- Necessary for JUnit 5 compatibility with Java 9+ -->
+                    <includes>
+                        <include>**/*Tests.java</include> <!-- Include all test files ending with Tests.java -->
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>
