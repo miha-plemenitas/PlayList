@@ -34,7 +34,7 @@ jobs:
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -f user-service/user-service/Dockerfile -t user-service ./UserService/user-service/user-service
+          docker build -f UserService/user-service/user-service/Dockerfile -t user-service ./UserService/user-service/user-service
 
       # Run tests inside the Docker container
       - name: Run tests
