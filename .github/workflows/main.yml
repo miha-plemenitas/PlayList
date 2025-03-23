@@ -22,8 +22,10 @@ jobs:
       # Run Maven tests before Docker build
       - name: Run Maven tests
         working-directory: ./UserService/user-service/user-service
-        run: ./mvnw test
-
+        run: |
+          chmod +x mvnw
+          ./mvnw test
+    
       # Set up Docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
