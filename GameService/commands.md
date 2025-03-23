@@ -28,3 +28,7 @@
 - ### GetWishList:
 
   - grpcurl -plaintext -d '{\"user_id\":\"user123\"}' -proto proto/game.proto localhost:50051 game.GameService/GetWishList
+
+## TESTING:
+
+- go test ./tests -v

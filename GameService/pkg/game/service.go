@@ -14,32 +14,30 @@ type Service interface {
 	GetWishList(ctx context.Context, userId string) ([]*db.Game, error)
 }
 
-type gameService struct{}
+type gameService struct {
+	repo GameRepository
+}
 
-func NewGameService() Service {
-	return &gameService{}
+func NewGameService(repo GameRepository) Service {
+	return &gameService{repo: repo}
 }
 
 func (s *gameService) GetGameById(ctx context.Context, id string) (*db.Game, error) {
-	game, err := db.FindGameById(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	return game, nil
+	return s.repo.FindGameById(ctx, id)
 }
 
 func (s *gameService) SearchGames(ctx context.Context, query string) ([]*db.Game, error) {
-	return db.SearchGamesByTitle(ctx, query)
+	return s.repo.SearchGamesByTitle(ctx, query)
 }
 
 func (s *gameService) AddToWishList(ctx context.Context, userId string, gameId string) error {
-	return db.AddGameToWishlist(ctx, userId, gameId)
+	return s.repo.AddGameToWishlist(ctx, userId, gameId)
 }
 
 func (s *gameService) RemoveFromWishList(ctx context.Context, userId string, gameId string) error {
-	return db.RemoveGameFromWishlist(ctx, userId, gameId)
+	return s.repo.RemoveGameFromWishlist(ctx, userId, gameId)
 }
 
 func (s *gameService) GetWishList(ctx context.Context, userId string) ([]*db.Game, error) {
-	return db.GetWishlistGames(ctx, userId)
+	return s.repo.GetWishlistGames(ctx, userId)
 }

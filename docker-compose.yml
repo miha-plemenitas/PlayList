@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  user-service:
+    build:
+      context: ./UserService/user-service/user-service
+      dockerfile: Dockerfile
+    image: user-service:latest
+    container_name: PlayList-UserService
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://Miha:miha123@playlistcluster.jy8zn.mongodb.net/Users?retryWrites=true&w=majority&appName=PlayListCluster
+    networks:
+      - playlist-network
+
+  game-service:
+    build:
+      context: ./GameService
+      dockerfile: Dockerfile
+    image: game-service:latest
+    container_name: PlayList-GameService
+    ports:
+      - "50051:50051"
+    environment:
+      - MONGO_URI=mongodb+srv://Miha:miha123@playlistcluster.jy8zn.mongodb.net/
+    networks:
+      - playlist-network
+
+networks:
+  playlist-network:
+    driver: bridge

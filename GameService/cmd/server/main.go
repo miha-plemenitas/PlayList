@@ -21,6 +21,25 @@ type grpcServer struct {
 	svc game.Service
 }
 
+// ✅ Adapter to implement GameRepository using the db package
+type dbRepo struct{}
+
+func (r *dbRepo) FindGameById(ctx context.Context, id string) (*db.Game, error) {
+	return db.FindGameById(ctx, id)
+}
+func (r *dbRepo) SearchGamesByTitle(ctx context.Context, query string) ([]*db.Game, error) {
+	return db.SearchGamesByTitle(ctx, query)
+}
+func (r *dbRepo) AddGameToWishlist(ctx context.Context, userId, gameId string) error {
+	return db.AddGameToWishlist(ctx, userId, gameId)
+}
+func (r *dbRepo) RemoveGameFromWishlist(ctx context.Context, userId, gameId string) error {
+	return db.RemoveGameFromWishlist(ctx, userId, gameId)
+}
+func (r *dbRepo) GetWishlistGames(ctx context.Context, userId string) ([]*db.Game, error) {
+	return db.GetWishlistGames(ctx, userId)
+}
+
 func main() {
 	// Setup context with cancel
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
@@ -33,8 +52,8 @@ func main() {
 	}
 	defer client.Disconnect(ctx)
 
-	// Create service
-	svc := game.NewGameService()
+	// ✅ Pass the dbRepo to NewGameService
+	svc := game.NewGameService(&dbRepo{})
 
 	// Create gRPC server
 	server := grpc.NewServer()

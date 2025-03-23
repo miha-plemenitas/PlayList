@@ -1,6 +1,5 @@
 name: CI Workflow
 
-# Trigger the workflow when pushing to the main branch
 on:
   push:
     branches:
@@ -11,26 +10,41 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # You can use the latest Ubuntu runner
-    timeout-minutes: 30 # Optional: increase if tests are long-running
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-      # Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Run Maven tests before Docker build
+      #########################
+      # 🧪 UserService (Java) #
+      #########################
       - name: Run Maven tests
         working-directory: ./UserService/user-service/user-service
         run: |
           chmod +x mvnw
           ./mvnw test
-    
-      # Set up Docker
+
+      ##########################
+      # ✅ GameService (Go)    #
+      ##########################
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22"
+
+      - name: Run Go unit tests
+        working-directory: ./GameService
+        run: |
+          go test ./tests -v
+
+      #########################
+      # 🐳 Docker Setup       #
+      #########################
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      # Cache Docker layers to speed up the workflow
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -39,7 +53,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Build Docker image
-      - name: Build Docker image
+      - name: Build UserService Docker image
         run: |
           docker build -f UserService/user-service/user-service/Dockerfile -t user-service ./UserService/user-service/user-service
+
+      - name: Build GameService Docker image
+        run: |
+          docker build -f GameService/Dockerfile -t game-service ./GameService
