@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       #########################
-      # 🧪 UserService (Java) #
+      #   UserService (Java) #
       #########################
       - name: Run Maven tests
         working-directory: ./UserService/user-service/user-service
@@ -27,7 +27,7 @@ jobs:
           ./mvnw test
 
       ##########################
-      # ✅ GameService (Go)    #
+      #   GameService (Go)    #
       ##########################
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -40,7 +40,7 @@ jobs:
           go test ./tests -v
 
       #########################
-      # 🐳 Docker Setup       #
+      #   Docker Setup       #
       #########################
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
