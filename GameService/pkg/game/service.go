@@ -1,0 +1,45 @@
+package game
+
+import (
+	"context"
+
+	"github.com/miha-plemenitas/PlayList/GameService/db"
+)
+
+type Service interface {
+	GetGameById(ctx context.Context, id string) (*db.Game, error)
+	SearchGames(ctx context.Context, query string) ([]*db.Game, error)
+	AddToWishList(ctx context.Context, userId string, gameId string) error
+	RemoveFromWishList(ctx context.Context, userId string, gameId string) error
+	GetWishList(ctx context.Context, userId string) ([]*db.Game, error)
+}
+
+type gameService struct{}
+
+func NewGameService() Service {
+	return &gameService{}
+}
+
+func (s *gameService) GetGameById(ctx context.Context, id string) (*db.Game, error) {
+	game, err := db.FindGameById(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return game, nil
+}
+
+func (s *gameService) SearchGames(ctx context.Context, query string) ([]*db.Game, error) {
+	return db.SearchGamesByTitle(ctx, query)
+}
+
+func (s *gameService) AddToWishList(ctx context.Context, userId string, gameId string) error {
+	return db.AddGameToWishlist(ctx, userId, gameId)
+}
+
+func (s *gameService) RemoveFromWishList(ctx context.Context, userId string, gameId string) error {
+	return db.RemoveGameFromWishlist(ctx, userId, gameId)
+}
+
+func (s *gameService) GetWishList(ctx context.Context, userId string) ([]*db.Game, error) {
+	return db.GetWishlistGames(ctx, userId)
+}

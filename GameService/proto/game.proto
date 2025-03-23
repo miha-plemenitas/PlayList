@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "github.com/miha-plemenitas/PlayList/GameService/proto;gamepb";
+
+service GameService {
+  rpc GetGameById(GameIdRequest) returns (GameResponse);
+  rpc SearchGames(GameSearchRequest) returns (GameListResponse);
+  rpc AddToWishList(WishListRequest) returns (WishListResponse);
+  rpc RemoveFromWishList(WishListRequest) returns (WishListResponse);
+  rpc GetWishList(UserRequest) returns (GameListResponse);
+}
+
+message Game {
+  string id = 1;
+  string title = 2;
+  string genre = 3;
+  string release_date = 4;
+  string developer = 5;
+  string platform = 6;
+}
+
+message GameIdRequest {
+  string id = 1;
+}
+
+message GameSearchRequest {
+  string query = 1;
+}
+
+message WishListRequest {
+  string user_id = 1;
+  string game_id = 2;
+}
+
+message UserRequest {
+  string user_id = 1;
+}
+
+message GameResponse {
+  Game game = 1;
+}
+
+message GameListResponse {
+  repeated Game games = 1;
+}
+
+message WishListResponse {
+  string message = 1;
+}
