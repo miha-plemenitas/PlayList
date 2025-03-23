@@ -12,11 +12,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest # You can use the latest Ubuntu runner
+    timeout-minutes: 30 # Optional: increase if tests are long-running
 
     steps:
       # Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      # Run Maven tests before Docker build
+      - name: Run Maven tests
+        working-directory: ./UserService/user-service/user-service
+        run: ./mvnw test
 
       # Set up Docker
       - name: Set up Docker Buildx
@@ -35,8 +41,3 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -f UserService/user-service/user-service/Dockerfile -t user-service ./UserService/user-service/user-service
-
-      # Run tests inside the Docker container
-      - name: Run tests
-        run: |
-          docker run --rm user-service ./mvnw test  # Run your tests with Maven inside the Docker container
