@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests the repository's ability to save a User to the MongoDB database and retrieve it by email
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
 public class UserRepositoryTests {

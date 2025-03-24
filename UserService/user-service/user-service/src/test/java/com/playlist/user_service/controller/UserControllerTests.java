@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+// Tests the register, login, and profile endpoints of the controller using MockMvc, which simulates HTTP requests
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTests {
 

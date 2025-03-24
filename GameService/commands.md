@@ -32,3 +32,9 @@
 ## TESTING:
 
 - go test ./tests -v
+
+## DOCKER:
+
+- docker-compose down --volumes --remove-orphans
+- docker-compose build
+- docker-compose up

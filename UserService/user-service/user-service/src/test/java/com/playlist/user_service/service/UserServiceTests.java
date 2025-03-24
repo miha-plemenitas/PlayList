@@ -15,6 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+// Tests the service layer's methods, such as registering a user, validating passwords, and finding users by email
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
 
