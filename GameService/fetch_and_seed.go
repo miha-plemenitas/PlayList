@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/miha-plemenitas/PlayList/GameService/db"
 )
 
@@ -18,11 +20,11 @@ const (
 
 type RawgGameListResponse struct {
 	Results []struct {
-		ID         int    `json:"id"`
-		Name       string `json:"name"`
-		Released   string `json:"released"`
-		Genres     []struct{ Name string } `json:"genres"`
-		Platforms  []PlatformWrapper       `json:"platforms"`
+		ID        int                `json:"id"`
+		Name      string             `json:"name"`
+		Released  string             `json:"released"`
+		Genres    []struct{ Name string } `json:"genres"`
+		Platforms []PlatformWrapper  `json:"platforms"`
 	} `json:"results"`
 }
 
@@ -42,10 +44,17 @@ type RawgGameDetails struct {
 }
 
 func main() {
+	_ = godotenv.Load()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
-	client, err := db.InitMongo(ctx, "mongodb+srv://Miha:miha123@playlistcluster.jy8zn.mongodb.net/", "Games")
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		log.Fatal("MONGO_URI environment variable is not set")
+	}
+
+	client, err := db.InitMongo(ctx, mongoURI, "Games")
 	if err != nil {
 		log.Fatalf("❌ MongoDB connection error: %v", err)
 	}

@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/joho/godotenv"
 	"github.com/miha-plemenitas/PlayList/GameService/db"
 	"github.com/miha-plemenitas/PlayList/GameService/pkg/game"
 	gamepb "github.com/miha-plemenitas/PlayList/GameService/proto"
@@ -41,12 +42,17 @@ func (r *dbRepo) GetWishlistGames(ctx context.Context, userId string) ([]*db.Gam
 }
 
 func main() {
-	// Setup context with cancel
+	_ = godotenv.Load()
+
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	// MongoDB connection
-	client, err := db.InitMongo(ctx, "mongodb+srv://Miha:miha123@playlistcluster.jy8zn.mongodb.net/", "Games")
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		log.Fatal("MONGO_URI environment variable is not set")
+	}
+
+	client, err := db.InitMongo(ctx, mongoURI, "Games")
 	if err != nil {
 		log.Fatalf("failed to connect to MongoDB: %v", err)
 	}

@@ -1,5 +1,9 @@
 # COMMANDS
 
+## SURCE ENV
+
+- source .env
+
 ## RUN SERVER:
 
 - go run cmd/server/main.go

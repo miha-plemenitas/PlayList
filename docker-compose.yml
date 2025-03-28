@@ -10,9 +10,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb+srv://Miha:miha123@playlistcluster.jy8zn.mongodb.net/Users?retryWrites=true&w=majority&appName=PlayListCluster
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/Users # Use the local MongoDB URI
     networks:
       - playlist-network
+    depends_on:
+      - mongo # Ensure MongoDB is started before the UserService
 
   game-service:
     build:
@@ -23,10 +25,26 @@ services:
     ports:
       - "50051:50051"
     environment:
-      - MONGO_URI=mongodb+srv://Miha:miha123@playlistcluster.jy8zn.mongodb.net/
+      - MONGO_URI=mongodb://mongo:27017/Games # Same local MongoDB URI
     networks:
       - playlist-network
+    depends_on:
+      - mongo # Ensure MongoDB is started before the GameService
+
+  mongo:
+    image: mongo:latest # Pull the latest MongoDB image from Docker Hub
+    container_name: mongo
+    ports:
+      - "27017:27017" # Map port 27017 (MongoDB default) on localhost to container
+    networks:
+      - playlist-network
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data to a Docker volume
 
 networks:
   playlist-network:
     driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
