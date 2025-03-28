@@ -40,7 +40,7 @@ jobs:
       - name: Run Maven tests
         working-directory: ./UserService/user-service/user-service
         env:
-          SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/Users
+          SPRING_DATA_MONGODB_URI: mongodb://localhost:27017/Users
         run: |
           chmod +x mvnw
           ./mvnw test
@@ -56,7 +56,7 @@ jobs:
       - name: Run Go unit tests
         working-directory: ./GameService
         env:
-          MONGO_URI: mongodb://mongo:27017/Games
+          MONGO_URI: mongodb://localhost:27017/Games
         run: |
           go test ./tests -v
 
