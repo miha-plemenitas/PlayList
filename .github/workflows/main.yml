@@ -13,21 +13,40 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongo --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
       #########################
-      #   UserService (Java) #
+      #   UserService (Java)   #
       #########################
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
       - name: Run Maven tests
         working-directory: ./UserService/user-service/user-service
+        env:
+          SPRING_DATA_MONGODB_URI: mongodb://localhost:27017/Users
         run: |
           chmod +x mvnw
           ./mvnw test
 
       ##########################
-      #   GameService (Go)    #
+      #   GameService (Go)     #
       ##########################
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -40,7 +59,7 @@ jobs:
           go test ./tests -v
 
       #########################
-      #   Docker Setup       #
+      #   Docker Setup        #
       #########################
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
