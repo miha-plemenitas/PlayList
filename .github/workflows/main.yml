@@ -71,6 +71,12 @@ jobs:
           chmod +x mvnw
           ./mvnw test
 
+      - name: Build RatingService for Docker
+        working-directory: ./RatingService/rating_service
+        run: |
+          chmod +x mvnw
+          ./mvnw package -DskipTests
+
       #########################
       #   Docker Setup        #
       #########################
