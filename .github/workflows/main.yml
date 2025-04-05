@@ -37,7 +37,7 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - name: Run Maven tests
+      - name: Run Maven tests for UserService
         working-directory: ./UserService/user-service/user-service
         env:
           SPRING_DATA_MONGODB_URI: mongodb://localhost:27017/Users
@@ -60,6 +60,17 @@ jobs:
         run: |
           go test ./tests -v
 
+      ##########################
+      #   RatingService (Java)  #
+      ##########################
+      - name: Run Maven tests for RatingService
+        working-directory: ./RatingService/rating_service
+        env:
+          QUARKUS_MONGODB_CONNECTION_STRING: mongodb://localhost:27017
+        run: |
+          chmod +x mvnw
+          ./mvnw test
+
       #########################
       #   Docker Setup        #
       #########################
@@ -81,3 +92,7 @@ jobs:
       - name: Build GameService Docker image
         run: |
           docker build -f GameService/Dockerfile -t game-service ./GameService
+
+      - name: Build RatingService Docker image
+        run: |
+          docker build -f RatingService/rating_service/Dockerfile -t rating-service ./RatingService/rating_service

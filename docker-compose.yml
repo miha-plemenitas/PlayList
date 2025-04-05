@@ -31,6 +31,27 @@ services:
     depends_on:
       - mongo # Ensure MongoDB is started before the GameService
 
+  rating-service:
+    build:
+      context: ./RatingService/rating_service
+      dockerfile: Dockerfile
+    image: rating-service:latest
+    container_name: PlayList-RatingService
+    ports:
+      - "8081:8081"
+    environment:
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://mongo:27017
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_AMQP_HOST=rabbitmq
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_AMQP_PORT=5672
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_AMQP_USERNAME=guest
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_AMQP_PASSWORD=guest
+      - QUARKUS_HTTP_PORT=8081 # <<--- ADDED THIS LINE
+    networks:
+      - playlist-network
+    depends_on:
+      - mongo
+      - rabbitmq
+
   mongo:
     image: mongo:latest # Pull the latest MongoDB image from Docker Hub
     container_name: mongo
@@ -40,6 +61,21 @@ services:
       - playlist-network
     volumes:
       - mongo-data:/data/db # Persist MongoDB data to a Docker volume
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_ENABLED_PLUGINS_FILE: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins
+    networks:
+      - playlist-network
 
 networks:
   playlist-network:
