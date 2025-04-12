@@ -77,6 +77,36 @@ services:
     networks:
       - playlist-network
 
+  web-gateway:
+    build:
+      context: ./WebGateway/webgateway
+      dockerfile: Dockerfile
+    image: web-gateway:latest
+    container_name: PlayList-WebGateway
+    ports:
+      - "8083:8083"
+    networks:
+      - playlist-network
+    depends_on:
+      - user-service
+      - rating-service
+      - game-service
+
+  mobile-gateway:
+    build:
+      context: ./MobileGateway
+      dockerfile: Dockerfile
+    image: mobile-gateway:latest
+    container_name: PlayList-MobileGateway
+    ports:
+      - "3001:3001"
+    networks:
+      - playlist-network
+    depends_on:
+      - user-service
+      - rating-service
+      - game-service
+
 networks:
   playlist-network:
     driver: bridge
