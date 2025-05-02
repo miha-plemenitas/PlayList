@@ -107,6 +107,42 @@ services:
       - rating-service
       - game-service
 
+  user-mfe:
+    build: ./UserInterface/user-mfe
+    image: user-mfe:latest
+    container_name: PlayList-UserMFE
+    ports:
+      - "4174:80"
+    networks:
+      - playlist-network
+
+  games-mfe:
+    build: ./UserInterface/games-mfe
+    image: games-mfe:latest
+    container_name: PlayList-GamesMFE
+    ports:
+      - "4175:80"
+    networks:
+      - playlist-network
+
+  ratings-mfe:
+    build: ./UserInterface/ratings-mfe
+    image: ratings-mfe:latest
+    container_name: PlayList-RatingsMFE
+    ports:
+      - "4176:80"
+    networks:
+      - playlist-network
+
+  host:
+    build: ./UserInterface/host
+    image: host:latest
+    container_name: PlayList-HostApp
+    ports:
+      - "5173:80"
+    networks:
+      - playlist-network
+
 networks:
   playlist-network:
     driver: bridge
