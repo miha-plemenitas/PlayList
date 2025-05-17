@@ -7,19 +7,20 @@ spring:
       mvc:
         routes:
           - id: user-service
-            uri: http://playlist-userservice:8080
+            uri: http://PlayList-UserService:8080
             predicates:
-              - Path=/users/**
+              - Path=/users/**, /wishlists/**
 
           - id: rating-service
-            uri: http://playlist-ratingservice:8081
+            uri: http://PlayList-RatingService:8081
             predicates:
               - Path=/ratings/**, /comments/**
 
           - id: game-service
-            uri: http://playlist-gameservice:8082
+            uri: http://PlayList-GameProxy:8082
             predicates:
               - Path=/games/**
+
       default-filters:
         - AddResponseHeader=X-Response-Time, ${random.value}
 

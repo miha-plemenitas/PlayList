@@ -14,7 +14,7 @@ function RatingsApp() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8083/ratings/661ff2a3c13d4b12e0c12345") // Example gameId
+      .get("http://localhost:8083/ratings/6828e3d28880fe4bb9d054b1") // Example gameId
       .then((res) => {
         setRatings(res.data);
       })
@@ -24,7 +24,7 @@ function RatingsApp() {
   }, []);
 
   return (
-    <div style={{ padding: "1rem", backgroundColor: "#fff8dc" }}>
+    <div style={{ padding: "1rem", backgroundColor: "#fff8dc", color: "#333" }}>
       <h2>⭐ Ratings Micro Frontend</h2>
       <p>This is the ratings-specific MFE loaded via Module Federation.</p>
 

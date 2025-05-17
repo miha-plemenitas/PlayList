@@ -52,6 +52,19 @@ services:
       - mongo
       - rabbitmq
 
+  game-proxy:
+    build:
+      context: ./GameProxy
+      dockerfile: Dockerfile
+    image: game-proxy:latest
+    container_name: PlayList-GameProxy
+    ports:
+      - "8082:8082"
+    networks:
+      - playlist-network
+    depends_on:
+      - game-service
+
   mongo:
     image: mongo:latest # Pull the latest MongoDB image from Docker Hub
     container_name: mongo
@@ -91,6 +104,7 @@ services:
       - user-service
       - rating-service
       - game-service
+      - game-proxy
 
   mobile-gateway:
     build:

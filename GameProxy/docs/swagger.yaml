@@ -1,0 +1,151 @@
+basePath: /
+definitions:
+  gamepb.Game:
+    properties:
+      developer:
+        type: string
+      genre:
+        type: string
+      id:
+        type: string
+      platform:
+        type: string
+      release_date:
+        type: string
+      title:
+        type: string
+    type: object
+  gamepb.GameListResponse:
+    properties:
+      games:
+        items:
+          $ref: '#/definitions/gamepb.Game'
+        type: array
+    type: object
+  gamepb.GameResponse:
+    properties:
+      game:
+        $ref: '#/definitions/gamepb.Game'
+    type: object
+  gamepb.WishListRequest:
+    properties:
+      game_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  gamepb.WishListResponse:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8082
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+  description: REST Proxy for gRPC GameService
+  title: Game Proxy API
+  version: "1.0"
+paths:
+  /games/{id}:
+    get:
+      parameters:
+      - description: Game ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gamepb.GameResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get Game by ID
+  /games/search:
+    get:
+      parameters:
+      - description: Search Query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gamepb.GameListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Search Games
+  /wishlist:
+    get:
+      parameters:
+      - description: User ID
+        in: query
+        name: user_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gamepb.GameListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get Wishlist for User
+  /wishlist/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Wishlist Add Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/gamepb.WishListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gamepb.WishListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add Game to Wishlist
+  /wishlist/remove:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Wishlist Remove Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/gamepb.WishListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gamepb.WishListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove Game from Wishlist
+swagger: "2.0"

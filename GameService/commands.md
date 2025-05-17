@@ -1,5 +1,9 @@
 # COMMANDS
 
+## FILL DATABASE
+
+- go run fetch_and_seed.go
+
 ## SURCE ENV
 
 - source .env
@@ -23,15 +27,15 @@
 
 - ### AddToWishList:
 
-  - grpcurl -plaintext -d '{"user_id":"user123", "game_id":"rawg-3498"}' -proto proto/game.proto localhost:50051 game.GameService/AddToWishList
+  - grpcurl -plaintext -d '{"user_id":"miha", "game_id":"rawg-3498"}' -proto proto/game.proto localhost:50051 game.GameService/AddToWishList
 
 - ### RemoveFromWishList:
 
-  - grpcurl -plaintext -d '{"user_id":"user123", "game_id":"rawg-3498"}' -proto proto/game.proto localhost:50051 game.GameService/RemoveFromWishList
+  - grpcurl -plaintext -d '{"user_id":"miha", "game_id":"rawg-3498"}' -proto proto/game.proto localhost:50051 game.GameService/RemoveFromWishList
 
 - ### GetWishList:
 
-  - grpcurl -plaintext -d '{"user_id":"user123"}' -proto proto/game.proto localhost:50051 game.GameService/GetWishList
+  - grpcurl -plaintext -d '{"user_id":"miha"}' -proto proto/game.proto localhost:50051 game.GameService/GetWishList
 
 ## TESTING:
 

@@ -26,4 +26,12 @@ export default defineConfig({
       formats: ["es"],
     },
   },
+  server: {
+    cors: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*", // 👈 Critical for Module Federation
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "*",
+    },
+  },
 });
