@@ -11,6 +11,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/miha-plemenitas/PlayList/GameService/db"
 	"github.com/miha-plemenitas/PlayList/GameService/pkg/game"
+	"github.com/miha-plemenitas/PlayList/GameService/pkg/game/audit"
 	gamepb "github.com/miha-plemenitas/PlayList/GameService/proto"
 
 	"google.golang.org/grpc"
@@ -61,8 +62,11 @@ func main() {
 	// ✅ Pass the dbRepo to NewGameService
 	svc := game.NewGameService(&dbRepo{})
 
-	// Create gRPC server
-	server := grpc.NewServer()
+	// ✅ Create gRPC server with audit logging interceptor
+	server := grpc.NewServer(
+		grpc.UnaryInterceptor(audit.AuditUnaryInterceptor),
+	)
+
 	gamepb.RegisterGameServiceServer(server, &grpcServer{svc: svc})
 
 	// Register reflection for grpcurl

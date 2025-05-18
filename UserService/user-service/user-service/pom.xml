@@ -102,6 +102,12 @@
             <version>2.1.0</version>
         </dependency>
 
+        <!-- Spring AOP for Audit Logging -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

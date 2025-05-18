@@ -1,5 +1,6 @@
 package com.playlist.rating_service.service;
 
+import com.playlist.rating_service.audit.AuditLog;
 import com.playlist.rating_service.model.Rating;
 import com.playlist.rating_service.repository.RatingRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,6 +11,7 @@ import io.smallrye.mutiny.Uni;
 import java.util.List;
 
 @ApplicationScoped
+@AuditLog
 public class RatingService {
 
     @Inject
