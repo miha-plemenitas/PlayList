@@ -19,5 +19,6 @@ WORKDIR /app
 COPY --from=builder /app/gameservice .
 
 EXPOSE 50051
+EXPOSE 2112
 
 ENTRYPOINT ["/app/gameservice"]

@@ -59,6 +59,9 @@ func main() {
 	}
 	defer client.Disconnect(ctx)
 
+	// ✅ Start metrics server
+	game.InitMetrics(client)
+
 	// ✅ Pass the dbRepo to NewGameService
 	svc := game.NewGameService(&dbRepo{})
 

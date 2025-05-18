@@ -1,5 +1,6 @@
 ### WE USE ActiveMQ (RabbitMQ-compatible broker)
-- docker exec -it rabbitmq  rabbitmq-plugins enable rabbitmq_amqp1_0 (enable plugin in docker)
+
+- docker exec -it rabbitmq rabbitmq-plugins enable rabbitmq_amqp1_0 (enable plugin in docker)
 
 ### DOCKER
 
@@ -11,3 +12,7 @@
 
 - mvn quarkus:dev
 - http://localhost:8080/ratings
+
+### METRICS
+
+- http://localhost:8081/q/metrics

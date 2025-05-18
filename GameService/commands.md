@@ -46,3 +46,7 @@
 - docker-compose down --volumes --remove-orphans
 - docker-compose build
 - docker-compose up
+
+## METRICS
+
+- http://localhost:2112/metrics

@@ -24,6 +24,7 @@ services:
     container_name: PlayList-GameService
     ports:
       - "50051:50051"
+      - "2112:2112"
     environment:
       - MONGO_URI=mongodb://mongo:27017/Games # Same local MongoDB URI
     networks:
